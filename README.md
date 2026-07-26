@@ -10,7 +10,7 @@ Every figure in the manuscript is reproducible from this repository.
 |---|---|
 | Raw sequencing reads | NCBI GEO [GSE333535](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE333535) |
 | Code + processed data | This repository |
-| Archived snapshot (citable DOI) | Zenodo — DOI pending |
+| Archived snapshot (citable DOI) | Zenodo — 10.5281/zenodo.21613293 |
 
 ---
 
