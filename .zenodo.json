@@ -1,0 +1,45 @@
+{
+  "title": "Analysis code and processed data for \"ARGK-2 sets a transcriptional stress response baseline in Caenorhabditis elegans\"",
+  "description": "<p>Analysis code and processed data accompanying Dunivan &amp; Fausett, <em>G3: Genes|Genomes|Genetics</em> (2026).</p><p>A full-factorial bulk RNA-seq experiment comparing <em>Caenorhabditis elegans</em> N2 (wild type), <em>argk-2(ok2723)</em> (RB2060) and <em>argk-4(ok3602)</em> (RB2598) under acute CoCl<sub>2</sub> oxidative stress, with orthogonal qPCR validation. The archive contains the complete numbered analysis pipeline (R and Python), processed count matrices, sample metadata, offline GO/KEGG/TFLink annotation resources, all DESeq2 contrast tables, gene-regulatory-network node and edge tables, and every published figure with its source data.</p><p>Raw sequencing reads are deposited separately at NCBI GEO under accession GSE333535.</p>",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "MIT",
+  "version": "1.0.0",
+  "language": "eng",
+  "creators": [
+    {
+      "name": "Dunivan, Cole",
+      "affiliation": "Department of Biology and Marine Biology, University of North Carolina Wilmington, Wilmington, NC, USA"
+    },
+    {
+      "name": "Fausett, Sarah R.",
+      "affiliation": "Department of Biology and Marine Biology, University of North Carolina Wilmington, Wilmington, NC, USA"
+    }
+  ],
+  "keywords": [
+    "Caenorhabditis elegans",
+    "RNA-seq",
+    "arginine kinase",
+    "phosphagen kinase",
+    "ARGK-2",
+    "oxidative stress",
+    "cobalt chloride",
+    "gene-by-environment interaction",
+    "DESeq2",
+    "gene regulatory network",
+    "innate immunity",
+    "ZIP-2",
+    "DAF-16",
+    "mitochondrial retrograde signaling",
+    "reproducible research"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "GSE333535",
+      "relation": "isSupplementTo",
+      "scheme": "other",
+      "resource_type": "dataset"
+    }
+  ],
+  "notes": "Code is released under the MIT License. Data and figures (data/ and outputs/) are released under CC BY 4.0; see LICENSE-DATA in the archive. Redistributed third-party annotation resources (TFLink, KEGG, Gene Ontology, WormBase) retain their original terms."
+}

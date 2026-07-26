@@ -1,0 +1,81 @@
+,Well,Fluor,Target,Content,Sample,Melt Temp
+,A01,SYBR,tba-1,Unkn,N2,79.5
+,A02,SYBR,tba-1,Unkn,N2,79.5
+,A03,SYBR,tba-1,Unkn,N2,79.5
+,A04,SYBR,tba-1,Unkn,FAU5,79.5
+,A05,SYBR,tba-1,Unkn,FAU5,79.5
+,A06,SYBR,tba-1,Unkn,FAU5,79.5
+,A07,SYBR,tba-1,Unkn,N2 treated,79.5
+,A08,SYBR,tba-1,Unkn,N2 treated,79.5
+,A09,SYBR,tba-1,Unkn,N2 treated,79.5
+,A10,SYBR,tba-1,Unkn,FAU5 treated,79
+,A11,SYBR,tba-1,Unkn,FAU5 treated,79
+,A12,SYBR,tba-1,Unkn,FAU5 treated,69
+,B01,SYBR,oac-7,Unkn,N2,77.5
+,B02,SYBR,oac-7,Unkn,N2,77.5
+,B03,SYBR,oac-7,Unkn,N2,77.5
+,B04,SYBR,oac-7,Unkn,FAU5,77.5
+,B05,SYBR,oac-7,Unkn,FAU5,78
+,B06,SYBR,oac-7,Unkn,FAU5,78
+,B07,SYBR,oac-7,Unkn,N2 treated,78
+,B08,SYBR,oac-7,Unkn,N2 treated,78
+,B09,SYBR,oac-7,Unkn,N2 treated,78
+,B10,SYBR,oac-7,Unkn,FAU5 treated,77.5
+,B11,SYBR,oac-7,Unkn,FAU5 treated,77.5
+,B12,SYBR,oac-7,Unkn,FAU5 treated,71.5
+,C01,SYBR,nhr-58,Unkn,N2,77.5
+,C02,SYBR,nhr-58,Unkn,N2,77.5
+,C03,SYBR,nhr-58,Unkn,N2,77.5
+,C04,SYBR,nhr-58,Unkn,FAU5,77.5
+,C05,SYBR,nhr-58,Unkn,FAU5,77.5
+,C06,SYBR,nhr-58,Unkn,FAU5,77.5
+,C07,SYBR,nhr-58,Unkn,N2 treated,77.5
+,C08,SYBR,nhr-58,Unkn,N2 treated,77.5
+,C09,SYBR,nhr-58,Unkn,N2 treated,77.5
+,C10,SYBR,nhr-58,Unkn,FAU5 treated,77.5
+,C11,SYBR,nhr-58,Unkn,FAU5 treated,77.5
+,C12,SYBR,nhr-58,Unkn,FAU5 treated,77.5
+,D01,SYBR,ugt-31,Unkn,N2,76.5
+,D02,SYBR,ugt-31,Unkn,N2,77
+,D03,SYBR,ugt-31,Unkn,N2,77
+,D04,SYBR,ugt-31,Unkn,FAU5,77
+,D05,SYBR,ugt-31,Unkn,FAU5,77
+,D06,SYBR,ugt-31,Unkn,FAU5,77
+,D07,SYBR,ugt-31,Unkn,N2 treated,77
+,D08,SYBR,ugt-31,Unkn,N2 treated,77
+,D09,SYBR,ugt-31,Unkn,N2 treated,77
+,D10,SYBR,ugt-31,Unkn,FAU5 treated,77
+,D11,SYBR,ugt-31,Unkn,FAU5 treated,77
+,D12,SYBR,ugt-31,Unkn,FAU5 treated,77
+,E01,SYBR,t22f3.3,Unkn,N2,75.5
+,E02,SYBR,t22f3.3,Unkn,N2,75.5
+,E03,SYBR,t22f3.3,Unkn,N2,75
+,E04,SYBR,t22f3.3,Unkn,FAU5,75.5
+,E05,SYBR,t22f3.3,Unkn,FAU5,75.5
+,E06,SYBR,t22f3.3,Unkn,FAU5,75.5
+,E07,SYBR,t22f3.3,Unkn,N2 treated,75.5
+,E08,SYBR,t22f3.3,Unkn,N2 treated,75.5
+,E09,SYBR,t22f3.3,Unkn,N2 treated,75.5
+,E10,SYBR,t22f3.3,Unkn,FAU5 treated,75.5
+,E11,SYBR,t22f3.3,Unkn,FAU5 treated,75.5
+,E12,SYBR,t22f3.3,Unkn,FAU5 treated,75
+,G01,SYBR,tba-1,NRT,N2,None
+,G02,SYBR,oac-7,NRT,N2,None
+,G03,SYBR,nhr-58,NRT,N2,None
+,G04,SYBR,ugt-31,NRT,N2,None
+,G05,SYBR,t22f3.3,NRT,N2,None
+,G07,SYBR,tba-1,NRT,N2 treated,None
+,G08,SYBR,oac-7,NRT,N2 treated,None
+,G09,SYBR,ceh-74,NRT,N2 treated,None
+,G11,SYBR,ugt-31,NRT,N2 treated,None
+,G12,SYBR,t22f3.3,NRT,N2 treated,None
+,H01,SYBR,tba-1,NRT,FAU5,None
+,H02,SYBR,oac-7,NRT,FAU5,None
+,H03,SYBR,nhr-58,NRT,FAU5,None
+,H04,SYBR,ugt-31,NRT,FAU5,None
+,H05,SYBR,t22f3.3,NRT,FAU5,None
+,H07,SYBR,tba-1,NRT,FAU5 treated,None
+,H08,SYBR,oac-7,NRT,FAU5 treated,None
+,H09,SYBR,ceh-74,NRT,FAU5 treated,None
+,H11,SYBR,ugt-31,NRT,FAU5 treated,None
+,H12,SYBR,t22f3.3,NRT,FAU5 treated,None

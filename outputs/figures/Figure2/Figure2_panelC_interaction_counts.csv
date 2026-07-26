@@ -1,0 +1,9 @@
+pathway_name,direction,n
+Sulfur metabolism,Positive G×E,3
+Carbon metabolism,Negative G×E,1
+Carbon metabolism,Positive G×E,3
+Biosynthesis of amino acids,Negative G×E,2
+Biosynthesis of amino acids,Positive G×E,2
+ABC transporters,Negative G×E,5
+Metabolic pathways,Negative G×E,3
+Metabolic pathways,Positive G×E,7

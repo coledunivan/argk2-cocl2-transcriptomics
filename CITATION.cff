@@ -1,0 +1,67 @@
+cff-version: 1.2.0
+title: >-
+  Analysis code and processed data for "ARGK-2 sets a transcriptional
+  stress response baseline in Caenorhabditis elegans"
+message: >-
+  If you use this software or data, please cite both the software
+  archive and the associated manuscript.
+type: software
+authors:
+  - given-names: Cole
+    family-names: Dunivan
+    email: coledunivan@gmail.com
+    affiliation: >-
+      Department of Biology and Marine Biology, University of North
+      Carolina Wilmington, Wilmington, NC, USA
+  - given-names: Sarah
+    name-particle: R.
+    family-names: Fausett
+    affiliation: >-
+      Department of Biology and Marine Biology, University of North
+      Carolina Wilmington, Wilmington, NC, USA
+repository-code: 'https://github.com/coledunivan/argk2-cocl2-transcriptomics'
+abstract: >-
+  Differential expression, functional enrichment, transcription-factor
+  target and gene-regulatory-network analysis of a full-factorial bulk
+  RNA-seq experiment comparing Caenorhabditis elegans N2, argk-2(ok2723)
+  and argk-4(ok3602) under acute CoCl2 oxidative stress, together with
+  orthogonal qPCR validation. Reproduces every figure in the associated
+  manuscript.
+keywords:
+  - Caenorhabditis elegans
+  - RNA-seq
+  - arginine kinase
+  - phosphagen kinase
+  - oxidative stress
+  - cobalt chloride
+  - gene-by-environment interaction
+  - DESeq2
+  - innate immunity
+  - mitochondrial retrograde signaling
+license: MIT
+license-url: 'https://opensource.org/licenses/MIT'
+version: 1.0.0
+date-released: '2026-07-26'
+references:
+  - type: article
+    title: >-
+      ARGK-2 sets a transcriptional stress response baseline in
+      Caenorhabditis elegans
+    authors:
+      - given-names: Cole
+        family-names: Dunivan
+      - given-names: Sarah
+        name-particle: R.
+        family-names: Fausett
+    journal: 'G3: Genes|Genomes|Genetics'
+    year: 2026
+    status: submitted
+  - type: database
+    title: >-
+      Transcriptional response of C. elegans arginine kinase mutants to
+      CoCl2 oxidative stress
+    database: NCBI Gene Expression Omnibus
+    identifiers:
+      - type: other
+        value: GSE333535
+        description: GEO series accession

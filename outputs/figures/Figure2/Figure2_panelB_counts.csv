@@ -1,0 +1,46 @@
+pathway_name,contrast_short,contrast,n_deg
+Autophagy - animal,Genotype effect,argk-2 vs N2 (Untreated),2
+Autophagy - animal,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,13
+Autophagy - animal,Treat. eff. (N2),N2: Treated vs Untreated,19
+Biosynthesis of cofactors,Genotype effect,argk-2 vs N2 (Untreated),1
+Biosynthesis of cofactors,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,20
+Biosynthesis of cofactors,Treat. eff. (N2),N2: Treated vs Untreated,21
+Carbon metabolism,Genotype effect,argk-2 vs N2 (Untreated),1
+Carbon metabolism,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,15
+Carbon metabolism,Treat. eff. (N2),N2: Treated vs Untreated,17
+Cysteine and methionine metabolism,Genotype effect,argk-2 vs N2 (Untreated),1
+Cysteine and methionine metabolism,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,10
+Cysteine and methionine metabolism,Treat. eff. (N2),N2: Treated vs Untreated,14
+Drug metabolism - cytochrome P450,Genotype effect,argk-2 vs N2 (Untreated),3
+Drug metabolism - cytochrome P450,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,19
+Drug metabolism - cytochrome P450,Treat. eff. (N2),N2: Treated vs Untreated,18
+Drug metabolism - other enzymes,Genotype effect,argk-2 vs N2 (Untreated),4
+Drug metabolism - other enzymes,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,20
+Drug metabolism - other enzymes,Treat. eff. (N2),N2: Treated vs Untreated,19
+Endocytosis,Genotype effect,NA,0
+Endocytosis,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,13
+Endocytosis,Treat. eff. (N2),N2: Treated vs Untreated,19
+Fatty acid metabolism,Genotype effect,argk-2 vs N2 (Untreated),3
+Fatty acid metabolism,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,14
+Fatty acid metabolism,Treat. eff. (N2),N2: Treated vs Untreated,16
+Glutathione metabolism,Genotype effect,argk-2 vs N2 (Untreated),2
+Glutathione metabolism,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,22
+Glutathione metabolism,Treat. eff. (N2),N2: Treated vs Untreated,27
+Longevity regulating pathway - worm,Genotype effect,argk-2 vs N2 (Untreated),4
+Longevity regulating pathway - worm,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,20
+Longevity regulating pathway - worm,Treat. eff. (N2),N2: Treated vs Untreated,26
+Lysosome biogenesis,Genotype effect,argk-2 vs N2 (Untreated),2
+Lysosome biogenesis,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,23
+Lysosome biogenesis,Treat. eff. (N2),N2: Treated vs Untreated,28
+Metabolic pathways,Genotype effect,argk-2 vs N2 (Untreated),11
+Metabolic pathways,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,124
+Metabolic pathways,Treat. eff. (N2),N2: Treated vs Untreated,153
+Metabolism of xenobiotics by cytochrome P450,Genotype effect,argk-2 vs N2 (Untreated),3
+Metabolism of xenobiotics by cytochrome P450,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,19
+Metabolism of xenobiotics by cytochrome P450,Treat. eff. (N2),N2: Treated vs Untreated,17
+Peroxisome,Genotype effect,argk-2 vs N2 (Untreated),2
+Peroxisome,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,20
+Peroxisome,Treat. eff. (N2),N2: Treated vs Untreated,21
+Protein processing in endoplasmic reticulum,Genotype effect,NA,0
+Protein processing in endoplasmic reticulum,Treat. eff. (argk-2−/−),argk-2: Treated vs Untreated,15
+Protein processing in endoplasmic reticulum,Treat. eff. (N2),N2: Treated vs Untreated,23

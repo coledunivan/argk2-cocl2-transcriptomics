@@ -1,0 +1,56 @@
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ── R ─────────────────────────────────────────────────────────────────────────
+.Rhistory
+.Rhistory.bak
+.RData
+.Rapp.history
+.Rproj.user/
+*.Rproj
+.Renviron
+renv/library/
+renv/staging/
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# ── Editors ───────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*~
+
+# ── Large derived files: ship the gzipped copy, not the 79 MB original ────────
+# Scripts prefer the plain CSV when present and fall back to the .gz, so a
+# local uncompressed copy is fine — it just never enters version control.
+data/reference/RNAseq_to_TF_Targets.csv
+!data/reference/RNAseq_to_TF_Targets.csv.gz
+
+# ── Retired: uncited G×E core analysis ────────────────────────────────────────
+# 13_Supp_GxE_core_analysis.py (in-degree histogram + TF Jaccard heatmap) is not
+# cited anywhere in the manuscript, and its output filenames collided with the
+# real Figure 6 panels B and C. Excluded from the repository. Safe to delete
+# from disk entirely; these rules can then go too:
+#   rm scripts/13_Supp_GxE_core_analysis.py
+#   rm outputs/supplementary/Figure6_*
+scripts/13_Supp_GxE_core_analysis.py
+outputs/supplementary/Figure6_panelB_GxE_indegree.*
+outputs/supplementary/Figure6_panelC_TF_coregulation.*
+outputs/supplementary/Figure6_GxE_core_stats.csv
+outputs/supplementary/Figure6_GxE_per_gene_indegree.csv
+
+# ── Scratch ───────────────────────────────────────────────────────────────────
+*.log
+*.bak
+tmp/
+scratch/

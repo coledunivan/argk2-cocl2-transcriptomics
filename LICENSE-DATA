@@ -1,0 +1,40 @@
+Data and figures in this repository — specifically the contents of `data/` and
+`outputs/` — are licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0).
+
+Copyright (c) 2026 Cole Dunivan and Sarah R. Fausett
+
+You are free to:
+
+  Share — copy and redistribute the material in any medium or format
+  Adapt — remix, transform, and build upon the material for any purpose,
+          even commercially
+
+Under the following terms:
+
+  Attribution — You must give appropriate credit, provide a link to the
+  license, and indicate if changes were made. You may do so in any reasonable
+  manner, but not in any way that suggests the licensor endorses you or your
+  use.
+
+  No additional restrictions — You may not apply legal terms or technological
+  measures that legally restrict others from doing anything the license
+  permits.
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Please cite: Dunivan C, Fausett SR. "ARGK-2 sets a transcriptional stress
+response baseline in Caenorhabditis elegans." G3: Genes|Genomes|Genetics (2026).
+
+Third-party resources redistributed here retain their original terms:
+
+  - TFLink transcription factor–target interactions (https://tflink.net),
+    used to build data/reference/RNAseq_to_TF_Targets.csv.gz
+  - KEGG pathway mappings for C. elegans (https://www.kegg.jp) — KEGG data are
+    free for academic use; commercial use requires a license from Pathway
+    Solutions Inc.
+  - Gene Ontology annotations via org.Ce.eg.db / GO.db (CC BY 4.0)
+  - WormBase gene identifiers (https://wormbase.org, CC0)
+
+Raw sequencing reads are deposited separately at NCBI GEO under accession
+GSE333535 and are subject to NCBI's data use policies.

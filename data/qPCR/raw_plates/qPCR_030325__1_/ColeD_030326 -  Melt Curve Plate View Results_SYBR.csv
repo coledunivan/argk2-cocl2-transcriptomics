@@ -1,0 +1,33 @@
+,,1,2,3,4,5,6,7,8,9,10,11,12
+A,Content,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn
+A,Sample,N2,N2,N2,N2 treated,N2 treated,N2 treated,FAU5,FAU5,FAU5,FAU5 treated,FAU5 treated,FAU5 treated
+A,Peak 1,79,79.5,79.5,79.5,79.5,79.5,79.5,79.5,79.5,79,79.5,None
+A,Peak 2,None,None,None,None,None,None,None,None,None,None,None,None
+B,Content,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn
+B,Sample,N2,N2,N2,N2 treated,N2 treated,N2 treated,FAU5,FAU5,FAU5,FAU5 treated,FAU5 treated,FAU5 treated
+B,Peak 1,87.5,87.5,87.5,88,81,81,81,81,81,81,87,87.5
+B,Peak 2,None,80.5,81,81,87.5,87.5,None,87,87.5,87,80.5,None
+C,Content,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn
+C,Sample,N2,N2,N2,N2 treated,N2 treated,N2 treated,FAU5,FAU5,FAU5,FAU5 treated,FAU5 treated,FAU5 treated
+C,Peak 1,77.5,77,77.5,77.5,77.5,77.5,77.5,77.5,77,77.5,77.5,77
+C,Peak 2,None,None,None,None,None,None,None,None,None,None,None,None
+D,Content,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn
+D,Sample,N2,N2,N2,N2 treated,N2 treated,N2 treated,FAU5,FAU5,FAU5,FAU5 treated,FAU5 treated,FAU5 treated
+D,Peak 1,77,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77.5,77
+D,Peak 2,None,None,None,None,None,None,None,None,None,None,None,None
+E,Content,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn
+E,Sample,N2,N2,N2,N2 treated,N2 treated,N2 treated,FAU5,FAU5,FAU5,FAU5 treated,FAU5 treated,FAU5 treated
+E,Peak 1,76.5,76.5,76.5,76.5,76.5,76.5,76.5,76.5,76.5,76.5,76.5,76.5
+E,Peak 2,None,None,None,None,None,None,None,None,None,None,None,None
+F,Content,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn
+F,Sample,N2,N2,N2,N2 treated,N2 treated,N2 treated,FAU5,FAU5,FAU5,FAU5 treated,FAU5 treated,FAU5 treated
+F,Peak 1,75.5,75.5,75.5,75.5,75.5,75.5,75.5,75.5,75.5,75.5,75.5,75.5
+F,Peak 2,None,None,None,None,None,None,None,None,None,None,None,None
+G,Content,NRT,NRT,NRT,NRT,NRT,NRT,NRT,NRT,NRT,NRT,NRT,NRT
+G,Sample,N2,N2,N2,N2,N2,N2,N2 treated,N2 treated,N2 treated,N2 treated,N2 treated,N2 treated
+G,Peak 1,None,None,None,None,None,None,None,None,None,None,None,None
+G,Peak 2,None,None,None,None,None,None,None,None,None,None,None,None
+H,Content,NRT,NRT,NRT,NRT,NRT,NRT,NRT,NRT,NRT,NRT,NRT,NRT
+H,Sample,FAU5,FAU5,FAU5,FAU5,FAU5,FAU5,FAU5 treated,FAU5 treated,FAU5 treated,FAU5 treated,FAU5 treated,FAU5 treated
+H,Peak 1,None,None,None,None,None,None,None,None,None,None,None,None
+H,Peak 2,None,None,None,None,None,None,None,None,None,None,None,None

@@ -1,0 +1,33 @@
+,,1,2,3,4,5,6,7,8,9,10,11,12
+A,Content,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn
+A,Sample,FAU5,FAU5,FAU5,N2,N2,N2,N2 treated,N2 treated,N2 treated,FAU5 treated,FAU5 treated,FAU5 treated
+A,Peak 1,79.5,79.5,79.5,79.5,79.5,79.5,79.5,79.5,79.5,79,79,None
+A,Peak 2,None,None,None,None,None,None,None,None,None,None,None,None
+B,Content,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn
+B,Sample,N2,N2,N2,FAU5,FAU5,FAU5,N2 treated,N2 treated,N2 treated,FAU5 treated,FAU5 treated,FAU5 treated
+B,Peak 1,78,78.5,78.5,78,78,78,78,78,78,78,77.5,77.5
+B,Peak 2,None,None,None,None,None,None,None,None,None,None,None,None
+C,Content,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn
+C,Sample,N2,N2,N2,FAU5,FAU5,FAU5,N2 treated,N2 treated,N2 treated,FAU5 treated,FAU5 treated,FAU5 treated
+C,Peak 1,71,71.5,71,78.5,78.5,78.5,78.5,78.5,78.5,78,78,78
+C,Peak 2,None,None,None,70.5,71,71,70.5,70.5,70.5,None,None,None
+D,Content,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn
+D,Sample,N2,N2,N2,FAU5,FAU5,FAU5,N2 treated,N2 treated,N2 treated,FAU5 treated,FAU5 treated,FAU5 treated
+D,Peak 1,78,77.5,77.5,68.5,68.5,None,77.5,77.5,77.5,77.5,77.5,77.5
+D,Peak 2,None,None,None,None,None,None,None,None,None,None,None,None
+E,Content,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn,Unkn
+E,Sample,N2,N2,N2,FAU5,FAU5,FAU5,N2 treated,N2 treated,N2 treated,FAU5 treated,FAU5 treated,FAU5 treated
+E,Peak 1,75.5,74.5,73.5,75,75.5,76,76,76,75,75.5,71.5,76
+E,Peak 2,None,None,None,None,72,None,70.5,72,None,72.5,None,None
+F,Content,,,,,,,,,,,,
+F,Sample,,,,,,,,,,,,
+F,Peak 1,,,,,,,,,,,,
+F,Peak 2,,,,,,,,,,,,
+G,Content,NRT,NRT,NRT,NRT,NRT,,NRT,NRT,NRT,,NRT,NRT
+G,Sample,N2,N2,N2,N2,N2,,N2 treated,N2 treated,N2 treated,,N2 treated,N2 treated
+G,Peak 1,None,73.5,None,75.5,None,,74.5,74.5,None,,69.5,69
+G,Peak 2,None,None,None,71,None,,None,None,None,,None,None
+H,Content,NRT,NRT,NRT,NRT,NRT,,NRT,NRT,NRT,,NRT,NRT
+H,Sample,FAU5,FAU5,FAU5,FAU5,FAU5,,FAU5 treated,FAU5 treated,FAU5 treated,,FAU5 treated,FAU5 treated
+H,Peak 1,None,None,None,None,None,,None,None,None,,None,None
+H,Peak 2,None,None,None,None,None,,None,None,None,,None,None
