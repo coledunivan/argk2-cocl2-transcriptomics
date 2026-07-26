@@ -7,18 +7,6 @@ match the run names in `../../../outputs/qPCR/qPCR_per_run_ddcq.csv` exactly.
 the published pipeline consumes. The other seven stay here rather than in `../runs/`
 **on purpose** — moving them changes what the pipeline computes. See "Why this matters".
 
-## What is here
-
-| Directory (matches the published per-run table) | Original CFX file | Run started (UTC) | Targets |
-|---|---|---|---|
-| `qPCR_Results_-_RB2060_vs__N2` | `admin_2025-10-06 15-29-36_795BR20389` | **6 Oct 2025** 19:29 | ceh-74, cest-34, daf-16, fbxa-128, zip-2 |
-| `qPCR_-_tba-1__oac-7__ceh-74__zip-2__pals-24__t22f3_3` | `Cole 251102` | **2 Nov 2025** 19:32 | ceh-74, oac-7, pals-24, t22f3.11, tba-1, zip-2 |
-| `qPCR_-_Treated_vs__Untreated__1_` | `Cole qPCR 250511` | **6 Nov 2025** 00:07 | ceh-74, oac-7, t22f3.11, ugt-31, zip-2 |
-| `qPCR_-1_31_2026_-_tba-1__t22f3_1__oac-7__nhr-58__ugt-31` | `ColeD_13026` | **30 Jan 2026** 23:33 → ended 31 Jan 00:59 | ceh-74, nhr-58, oac-7, t22f3.3→t22f3.11, tba-1, ugt-31 |
-| `Fw__qPCR_-_022026` | `ColeD_22026_qPCR` | **20 Feb 2026** 23:52 | ceh-74, nhr-58, oac-7, t22f3.3→t22f3.11, tba-1, ugt-31 |
-| `qPCR_030325__1_` | `ColeD_030326` | **3 Mar 2026** 23:47 | fbxa-128, fbxa-79, oac-7, ugt-29, ugt-31 |
-| `qPCR_4_6_26` | `cole qPCR 040626` | **6 Apr 2026** 21:07 | fbxa-79, tba-1, ugt-29, ugt-31 |
-| `ColeD_41726` | `ColeD_41726` | 17 Apr 2026 | oac-7, t22f3.11, ugt-29, ugt-31 |
 
 Two naming quirks worth knowing:
 
