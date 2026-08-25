@@ -14,17 +14,13 @@
 #   genotype effect vs treatment effect
 #
 # ANALYSIS DESIGN
-# -----------------------------------------------------------------------------
-#
 # PANELS A/B:
 #
-#   Use the CANONICAL FULL-MODEL DESeq2 contrast tables produced by the main
+#   Use the full DESeq2 contrast tables produced by the main
 #   DE pipeline:
-#
 #     outputs/DESeq2/DESeq2_treatment_in_N2.csv
 #     outputs/DESeq2/DESeq2_genotype_treated.csv
-#
-#
+
 #     CELE gene ID
 #        ↓
 #     celegans.db
@@ -67,45 +63,28 @@
 #
 #
 # PLOTTING
-#   * Thesis-style A | (B / C) geometry
-#   * Panel B restricted to the thesis immune-response hierarchy
 #   * Only the long "biological process involved in interspecies interaction
 #     between organisms" label is abbreviated
 #   * Panel C symmetric around genotype effect = 0
 #   * Panel C enlarged relative to previous recreation
-#
-#
 # OUTPUTS
 # outputs/figures/Figure3/
 #
-#   Fig3_FINAL_FULLMODEL_OLDGO_THESIS_STYLE.pdf
-#   Fig3_FINAL_FULLMODEL_OLDGO_THESIS_STYLE.png
 #   Fig3_panel_A_GO.csv
 #   Fig3_panel_B_GO.csv
 #   Fig3_panel_C_data.csv
-#
-
-
-
 
 # 0. Packages
-
-
 suppressPackageStartupMessages({
-  
   library(DESeq2)
-  
   library(dplyr)
   library(tidyr)
   library(tibble)
   library(purrr)
   library(stringr)
-  
   library(ggplot2)
   library(patchwork)
   library(scales)
-  
-  # Original thesis GO tools
   library(clusterProfiler)
   library(org.Ce.eg.db)
   library(AnnotationDbi)
@@ -146,14 +125,9 @@ summarise <- dplyr::summarise
 summarize <- dplyr::summarize
 
 
-
 # 1. Configuration
-
 DESEQ_DIR <- "outputs/DESeq2"
-
 OUT_DIR <- "outputs/figures/Figure3"
-
-
 dir.create(
   OUT_DIR,
   recursive = TRUE,
@@ -164,28 +138,16 @@ dir.create(
 # GO threshold
 GO_DE_PADJ <- 0.10
 GO_P_CUT   <- 0.10
-
-
 # Panel C significance threshold
 DE_PADJ_CUT <- 0.05
-
-
 MIN_SUM <- 10
-
-
 PANEL_A_TOP <- 20
 
 
-
 # 2. Locate Panel C source files
-
-
 find_first <- function(patterns, label) {
-  
   hits <- character(0)
-  
   for (p in patterns) {
-    
     hits <- c(
       hits,
       Sys.glob(p)
@@ -193,10 +155,7 @@ find_first <- function(patterns, label) {
   }
   
   hits <- unique(hits)
-  
-  
   if (!length(hits)) {
-    
     stop(
       sprintf(
         "Could not find %s file. Tried: %s",
@@ -212,7 +171,6 @@ find_first <- function(patterns, label) {
   
   hits[1]
 }
-
 
 rna_file_C <- find_first(
   c(
@@ -247,10 +205,7 @@ message(
 )
 
 
-
-# 3. Immune GO regex — ORIGINAL Panel C logic
-
-
+# 3. Immune GO regex 
 immune_regex <- paste0(
   
   "(immune|innate|host defen[cs]e|antimicrob|pathogen|",
@@ -273,12 +228,9 @@ immune_regex <- paste0(
 )
 
 
-
 # PART I
 # PANELS A/B
 # 4. Locate original RNA-seq count matrix
-
-
 rna_file_GO <- find_first(
   c(
     "data/RNASEQ61125.csv",
@@ -287,39 +239,28 @@ rna_file_GO <- find_first(
   ),
   "original GO count matrix"
 )
-
-
 message(
   "GO counts: ",
   rna_file_GO
 )
 
-
-
 # 5. Load original GO count matrix
-
-
 raw_counts_GO <- read.csv(
   rna_file_GO,
   check.names = FALSE,
   stringsAsFactors = FALSE
 )
 
-
 colnames(raw_counts_GO)[1] <- "Gene"
-
-
 raw_counts_GO <- raw_counts_GO %>%
   filter(
     !duplicated(Gene)
   )
 
-
 counts_GO <- raw_counts_GO %>%
   column_to_rownames(
     "Gene"
   )
-
 
 meta_GO <- read.csv(
   meta_file,
@@ -327,34 +268,27 @@ meta_GO <- read.csv(
   check.names = FALSE
 )
 
-
 meta_GO$SampleLabel <- trimws(
   meta_GO$SampleLabel
 )
 
-
 rownames(meta_GO) <- meta_GO$SampleLabel
 
 # 6. Align sample names
-
-
 message(
   "Aligning GO counts to metadata..."
 )
-
 
 shared_GO <- intersect(
   colnames(counts_GO),
   rownames(meta_GO)
 )
 
-
 if (length(shared_GO) == 0L) {
   
   message(
     "No direct SampleLabel overlap. Trying alternate sample names..."
   )
-  
   
   if (!exists("harmonize_sample_names")) {
     
