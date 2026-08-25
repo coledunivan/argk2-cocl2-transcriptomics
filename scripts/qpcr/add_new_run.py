@@ -3,12 +3,8 @@
 add_new_run.py - Add ColeD_41726 qPCR run to the combined analysis.
 
 Strategy
---------
 The existing CSVs (qPCR_per_run_ddcq.csv and qPCR_combined_deltadeltaCq.csv)
-summarize the 7 previously processed plates. The raw Cq files for those
-plates are not in this directory, so we can't recompute their log2FC from
-scratch. Instead:
-
+summarize the 7 previously processed plates. 
   1. Load the existing per-run table (old runs; 7 plates).
   2. Process ONLY the new run (ColeD_41726) through the same pipeline
      (outlier-flag -> DeltaCq vs tba-1 -> DeltaDeltaCq for the 3 contrasts).
@@ -21,8 +17,6 @@ scratch. Instead:
      RNA-seq DESeq2 results have not changed).
   6. Rebuild qPCR_figure_panel.pdf/png via make_figure().
 
-This preserves exact reproducibility of the old runs and adds the new
-one through the identical code path.
 """
 import sys
 import numpy as np
@@ -44,9 +38,7 @@ PER_RUN_CSV = QPCR_OUT / "qPCR_per_run_ddcq.csv"
 COMBINED_CSV = QPCR_OUT / "qPCR_combined_deltadeltaCq.csv"
 COMPARISON_CSV = QPCR_OUT / "qPCR_vs_RNAseq_comparison.csv"
 
-# --------------------------------------------------------------------------
 # 1. Process the NEW run only
-# --------------------------------------------------------------------------
 print("=" * 72)
 print("Adding new run:", NEW_RUN_DIR.name)
 print("=" * 72)
@@ -64,9 +56,7 @@ print(f"       condition counts:")
 print(cq_df.groupby(['strain','treatment','target'])
       .size().unstack(fill_value=0).to_string())
 
-# --------------------------------------------------------------------------
 # 2. QC: flag technical-replicate outliers (SD>0.5 drop logic)
-# --------------------------------------------------------------------------
 print("\n[QC] flagging technical-replicate outliers (SD>0.5)")
 cq_df = flag_outliers(cq_df)
 dropped = cq_df[~cq_df['keep']]
@@ -75,16 +65,13 @@ if len(dropped):
     print(dropped[['run','target','strain','treatment','well','cq']]
           .to_string(index=False))
 
-# --------------------------------------------------------------------------
 # 3. DeltaCq vs tba-1
-# --------------------------------------------------------------------------
+
 print("\n[DeltaCq] normalizing to tba-1")
 dcq_df = compute_delta_cq(cq_df, ref_gene=REF_GENE)
 print(f"          rows: {len(dcq_df)}")
 
-# --------------------------------------------------------------------------
 # 4. DeltaDeltaCq for 3 contrasts
-# --------------------------------------------------------------------------
 print("\n[DeltaDeltaCq] computing 3 contrasts")
 ddcq_new = compute_ddcq_contrasts(dcq_df)
 # Apply the canonical rename (t22f3.3 -> t22f3.11). For this run the target
@@ -95,9 +82,7 @@ ddcq_save = ddcq_new.drop(columns=["dcq_num_vals", "dcq_den_vals"])
 print(ddcq_save[['run','target','contrast','ddcq','log2fc','n_num','n_den']]
       .to_string(index=False))
 
-# --------------------------------------------------------------------------
 # 5. Load existing per-run CSV, concatenate, re-aggregate
-# --------------------------------------------------------------------------
 print("\n[merge] concatenating with existing per-run table")
 old_per_run = pd.read_csv(PER_RUN_CSV)
 print(f"        old runs: {old_per_run['run'].nunique()} "
@@ -122,21 +107,17 @@ agg_new = aggregate_across_runs(merged_per_run)
 agg_new["padj_BH"] = bh_adjust(agg_new["p_value"].values)
 agg_new = agg_new.sort_values(["contrast", "target"]).reset_index(drop=True)
 
-# --------------------------------------------------------------------------
 # 6. Save refreshed CSVs
-# --------------------------------------------------------------------------
 merged_per_run.to_csv(PER_RUN_CSV, index=False)
 print(f"\n[write] {PER_RUN_CSV}  ({len(merged_per_run)} rows)")
 
 agg_new.to_csv(COMBINED_CSV, index=False)
 print(f"[write] {COMBINED_CSV}  ({len(agg_new)} rows)")
 
-# --------------------------------------------------------------------------
 # 7. Refresh qPCR_vs_RNAseq_comparison.csv
 #    - keep rnaseq_* columns as-is (RNA-seq data hasn't changed)
 #    - overwrite qpcr_* columns from the new aggregate
 #    - recompute direction_agrees
-# --------------------------------------------------------------------------
 print(f"\n[write] refreshing {COMPARISON_CSV}")
 comp_old = pd.read_csv(COMPARISON_CSV)
 
@@ -172,9 +153,7 @@ comp_new["direction_agrees"] = np.where(both, sign_q == sign_r, pd.NA)
 comp_new.to_csv(COMPARISON_CSV, index=False)
 print(f"        wrote {len(comp_new)} rows")
 
-# --------------------------------------------------------------------------
 # 8. Report the effect of the new run on the figure-subset genes
-# --------------------------------------------------------------------------
 print("\n" + "=" * 72)
 print("EFFECT OF NEW RUN ON FIGURE-SUBSET GENES")
 print("=" * 72)
@@ -197,9 +176,7 @@ for gene in FIG_GENES:
         print(f"  {contrast:10s}  new-run log2FC = {this_run_fc:+.2f}   "
               f"combined: {mean_fc:+.2f} ± {sem:.2f}  n={n}  p={p:.3g}")
 
-# --------------------------------------------------------------------------
 # 9. Build the figure
-# --------------------------------------------------------------------------
 print("\n" + "=" * 72)
 print("BUILDING FIGURE")
 print("=" * 72)
@@ -223,9 +200,7 @@ make_figure(agg_fig, ddcq_fig,
             SUPP_FIG / "qPCR_figure_panel.pdf",
             SUPP_FIG / "qPCR_figure_panel.png")
 
-# --------------------------------------------------------------------------
 # 10. Final summary
-# --------------------------------------------------------------------------
 print("\n" + "=" * 72)
 print("FINAL FIGURE-SUBSET SUMMARY (genes with >= 2 runs in geno_trt)")
 print("=" * 72)
