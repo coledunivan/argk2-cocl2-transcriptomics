@@ -23,7 +23,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-# ---- Repository-anchored paths ---------------------------------------------
+# Repository-anchored paths 
 ROOT     = Path(__file__).resolve().parents[1]
 EFF_ROOT = ROOT / "data" / "qPCR" / "efficiency_curves"
 QPCR_OUT = ROOT / "outputs" / "qPCR"
@@ -80,9 +80,9 @@ def E_from_slope(slope):
     E = 10 ** (-1 / slope)
     return E, (E - 1) * 100
 
-# -----------------------------------------------------------------------
+# 
 # Fit each target and assemble a summary table
-# -----------------------------------------------------------------------
+# 
 results = []
 fit_panels = []  # per-target data for the sup figure
 
@@ -124,10 +124,10 @@ print(res_df[["target","n_used","n_excluded","slope","r_squared",
 res_df.to_csv(QPCR_OUT / "primer_efficiencies.csv", index=False)
 print("\nsaved primer_efficiencies.csv")
 
-# -----------------------------------------------------------------------
+# 
 # Build the supplementary figure: 5 panels, one per target
 # Style matches the user's ugt-29 reference plot
-# -----------------------------------------------------------------------
+# 
 mpl.rcParams.update({
     "font.family": "sans-serif",
     "font.sans-serif": ["Helvetica","Arial","Liberation Sans","DejaVu Sans"],
