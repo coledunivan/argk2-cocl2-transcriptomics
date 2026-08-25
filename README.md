@@ -6,11 +6,10 @@ Full-factorial bulk RNA-seq of *C. elegans* N2 (wild type), *argk-2(ok2723)* (RB
 *argk-4(ok3602)* (RB2598) under acute CoCl₂ oxidative stress, with orthogonal qPCR validation.
 Every figure in the manuscript is reproducible from this repository.
 
-| Resource | Location |
-|---|---|
-| Raw sequencing reads | NCBI GEO [GSE333535](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE333535) |
-| Code + processed data | This repository |
-| Archived snapshot (citable DOI) | Zenodo — 10.5281/zenodo.21613293 |
+Resource | Location |
+Raw sequencing reads | NCBI GEO [GSE333535](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE333535) |
+Code + processed data | This repository |
+Archived snapshot (citable DOI) | Zenodo — 10.5281/zenodo.21613293 |
 
 ---
 
@@ -36,10 +35,8 @@ Rscript scripts/02_Figure1.R
 project root, so `Rscript scripts/02_Figure1.R` and `cd scripts && Rscript 02_Figure1.R`
 both work, but relative paths are always interpreted against the repo root.
 
----
 
 ## Pipeline
-
 Scripts are numbered in dependency order. `01` must run first — it produces the DESeq2
 contrast tables that almost everything downstream consumes.
 
@@ -61,14 +58,10 @@ contrast tables that almost everything downstream consumes.
 | 13 | `13_Supp_GxE_heatmap.py` | `outputs/supplementary/Figure_S3_GxE_heatmap.*` | **Supp. Figure 3** |
 
 Shared helpers live in `scripts/_utils.R` (sourced automatically) and `scripts/qpcr/`
-(the qPCR library module — `qpcr_analysis.py` is imported by 09–11, not run directly).
-
 Dependency order: `01` → everything. `07` → `08`. `09` → `10` → `11`.
 
 Supplementary figure map: Supp 1 → `10`, Supp 2 → `09`, Supp 3 → `13`, Supp 4 → `12`,
 Supp 5 → `00` (`outputs/QC/Dispersion_estimates.pdf`).
-
----
 
 ## Repository layout
 
@@ -104,8 +97,6 @@ argk2-cocl2-transcriptomics/
 `outputs/` is committed so reviewers can inspect every figure and table without
 re-running the pipeline. Re-running the scripts overwrites it in place.
 
----
-
 ## The gzipped TFLink file
 
 `data/reference/RNAseq_to_TF_Targets.csv` is ~79 MB uncompressed, past the point where
@@ -138,8 +129,6 @@ install both sets. Exact versions used for the manuscript are recorded in
 Script `07_GRN_inputs.R` downloads the WormBase gene-ID table (~2 MB) to map sequence
 names to common names; it needs network access on first run.
 
----
-
 ## Citation
 
 If you use this code or data, please cite the manuscript and the Zenodo archive.
@@ -153,3 +142,4 @@ Data and figures (`data/`, `outputs/`) are CC BY 4.0 — see `LICENSE-DATA`.
 ## Contact
 
 Sarah Fausett — Department of Biology and Marine Biology, University of North Carolina Wilmington
+fausetts@uncw.edu
