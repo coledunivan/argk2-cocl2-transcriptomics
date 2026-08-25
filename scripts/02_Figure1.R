@@ -1,7 +1,6 @@
 # Figure 1 -- Acute cobalt (II) chloride exposure induces transcriptional
 # responses in wildtype and arginine kinase loss-of-function mutants.
 #
-# Cole Dunivan -- G3:omics manuscript
 #
 # Panels:
 #   A: PCA of VST-transformed counts, with inter-experiment batch effect
@@ -11,24 +10,19 @@
 #   C: Volcano plots -- argk-2(-/-) and argk-4(-/-) vs N2, in each treatment
 #   G: Three-set Venn diagram of treatment-response DEGs across genotypes
 #
-# Pipeline decisions documented in methods:
+# Pipeline decisions 
 #   * argk-1 (MAH205) excluded -- incomplete knockdown in raw counts.
-#   * Protein-coding filter: REMOVED -- new counts file (data/RNASEQ61125.csv)
-#     does not carry a biotype/GENENAME column. If biotype annotation is
-#     needed, join an external annotation table before the DESeq2 fit.
+#
 #   * PCA-only batch correction: limma::removeBatchEffect() is applied to
 #     the VST matrix using experiment as the batch variable, with the
-#     genotype*treatment design preserved. This is for visualization
-#     only and does not propagate to DESeq2 testing -- those tests
-#     handle batch correctly via the `experiment` term in the design
-#     formula and are computed from the raw counts.
+#     genotype*treatment design preserved. 
 #   * DEGs for Panel D (Venn): BH-adjusted p < 0.05 AND |log2FC| > 1.
 #     Panel C volcano highlighting uses the same thresholds. Both match
 #     the published Figure 1 caption.
 
 
 
-# ---- 0. Setup --------------------------------------------------------------
+# 0. Setup 
 
 suppressPackageStartupMessages({
   library(dplyr); library(tidyr); library(readr); library(tibble)
@@ -66,7 +60,7 @@ dir.create(OUT_DIR, showWarnings = FALSE, recursive = TRUE)
 dir.create(DEG_DIR, showWarnings = FALSE, recursive = TRUE)
 
 
-# ---- Style -----------------------------------------------------------------
+# Style 
 
 COL_UP   <- "#cb181d"
 COL_DOWN <- "#2171b5"
@@ -112,7 +106,7 @@ KO_TARGETS <- tibble(
 )
 
 
-# ---- 1. Load and align data ------------------------------------------------
+# 1. Load and align data 
 
 # Use robust CSV loader from shared utils (handles CR-only line endings)
 # Source the utils file from one of these standard locations:
@@ -184,7 +178,7 @@ cat("Sample breakdown:\n")
 print(table(coldata$genotype, coldata$treatment))
 
 
-# ---- 2. DESeq2 models ------------------------------------------------------
+# 2. DESeq2 models 
 
 dds <- DESeqDataSetFromMatrix(
   countData = counts,
@@ -218,7 +212,7 @@ dds_n2 <- {
 }
 
 
-# ---- 3. Panel A -- PCA -----------------------------------------------------
+#  3. Panel A - PCA 
 
 vsd <- vst(dds, blind = FALSE)
 
@@ -241,16 +235,14 @@ pcaData <- plotPCA(
 
 percentVar <- round(100 * attr(pcaData, "percentVar"))
 
-# ---------------------------------------------------------------------------
 # FLIP PC2 FOR FIGURE ORIENTATION
 #
 # PCA eigenvector signs are arbitrary: PC2 and -PC2 represent the exact same
 # principal component. This flip changes only the visual orientation so that
 # Panel A matches the orientation used in the original manuscript figure.
-#
 # Variance explained, sample-to-sample distances, clustering, and all
 # downstream analyses are unchanged.
-# ---------------------------------------------------------------------------
+# 
 pcaData$PC2 <- -pcaData$PC2
 
 
@@ -346,8 +338,7 @@ ggsave(
   height = 5.5
 )
 
-
-# ---- 4. Panel B -- Knockout validation -------------------------------------
+# 4. Panel B -- Knockout validation 
 # Thesis-style layout: two transcript-specific subpanels. Each subpanel shows
 # both mutant genotypes vs N2 at untreated baseline, so the cognate KO and the
 # non-cognate control comparison are visible side-by-side.
@@ -485,7 +476,7 @@ ggsave(
 )
 
 
-# ---- 5. Panel C -- Volcano plots -------------------------------------------
+# 5. Panel C -- Volcano plots 
 
 contrast_grid <- expand.grid(
   strain    = c("RB2060", "RB2598"),
@@ -586,24 +577,7 @@ write.csv(n2_df,
 panelC <- wrap_plots(volcano_plots, ncol = 4)
 
 
-# ---- 6. Panel D -- Treatment-response Venn diagram -------------------------
-#
-# Two Venns, each internally consistent (all circles = same comparison type):
-#
-#   UNTREATED (2-set, blue):
-#     Each circle = genotype effect vs N2 within the untreated condition.
-#     N2 is the reference and has no circle (N2 unt vs N2 unt = 0 DEGs).
-#       argk-2 circle: RB2060 untreated vs N2 untreated
-#       argk-4 circle: RB2598 untreated vs N2 untreated
-#
-#   TREATED (3-set, red):
-#     Each circle = treatment response (treated vs untreated) within that
-#     genotype. All three circles are the same comparison type.
-#       N2 circle    : N2 treated vs N2 untreated      (wildtype stress response)
-#       argk-2 circle: RB2060 treated vs RB2060 untreated (mutant stress response)
-#       argk-4 circle: RB2598 treated vs RB2598 untreated (mutant stress response)
-#     Overlap = conserved stress-response genes.
-#     Unique to N2 = genes N2 responds to that the mutants fail to mount.
+#  6. Panel D - Treatment-response Venn diagram 
 
 # DEG filter: padj < 0.05 AND |log2FC| > 1 (both thresholds match figure caption)
 deg_filter <- function(df) {
@@ -619,7 +593,7 @@ read_deg <- function(file) {
     deg_filter()
 }
 
-# --- Write within-mutant treatment DEG files (needed for treated Venn) ------
+#  Write within-mutant treatment DEG files (needed for treated Venn) 
 # Same approach as dds_n2: fit a per-strain model, then extract treatment contrast.
 make_within_strain_dds <- function(strain_label) {
   cd <- coldata[coldata$genotype == strain_label, , drop = FALSE]
@@ -643,14 +617,6 @@ for (strain in c("RB2060", "RB2598")) {
             row.names = FALSE)
 }
 
-# --- Full-model treatment contrasts (overwrite the within-strain files) ----
-# The within-strain DESeq2 fits above use only 8 samples each and drop the
-# experiment batch term, producing inflated DEG counts (e.g. argk-4 came out
-# with >3000 treatment DEGs in those fits). Re-derive each genotype's
-# treatment response from the SAME full-factorial model used in scripts
-# 01, 03, and 09 (apeglm for the reference-genotype coefficient, ashr for
-# the linear-combination contrasts), so Panel D's Venn is statistically
-# sound and consistent with the rest of the figure suite.
 message("Re-extracting per-genotype treatment DEGs from full-factorial model with shrinkage...")
 write_full_model_trt_deg <- function(out_file, coef = NULL, contrast_list = NULL) {
   res <- if (!is.null(coef)) {
@@ -674,7 +640,7 @@ write_full_model_trt_deg("RB2598_treated_vs_untreated_DEGs.csv",
                          contrast_list = list(c("treatment_treated_vs_untreated",
                                                 "genotypeRB2598.treatmenttreated")))
 
-# --- Load gene lists --------------------------------------------------------
+# Load gene lists 
 genes_argk2_un  <- read_deg("RB2060_vs_N2_untreated_DEGs.csv")      # argk-2 unt vs N2 unt
 genes_argk4_un  <- read_deg("RB2598_vs_N2_untreated_DEGs.csv")      # argk-4 unt vs N2 unt
 genes_n2_stress <- read_deg("N2_treated_vs_untreated_DEGs.csv")      # N2 tx vs N2 unt
@@ -688,10 +654,7 @@ cat(sprintf("  N2 treated vs N2 untreated           : %d\n", length(genes_n2_str
 cat(sprintf("  argk-2(-/-) treated vs untreated     : %d\n", length(genes_argk2_tx)))
 cat(sprintf("  argk-4(-/-) treated vs untreated     : %d\n", length(genes_argk4_tx)))
 
-# Single 3-set Venn — logically coherent: each circle is the *treatment*
-# response DEG set (treated vs untreated) for one genotype. All three
-# circles measure the same kind of contrast, so overlaps and uniques are
-# directly interpretable as conserved vs genotype-specific stress responses.
+# Single 3-set Venn 
 venn_tr <- list(
   "N2"          = genes_n2_stress,
   "argk-2(-/-)" = genes_argk2_tx,
@@ -741,14 +704,11 @@ ggsave(file.path(OUT_DIR, "Figure1_PanelD_Venn_Treatment.pdf"),
 panelD <- p_venn_tr
 
 
-# ---- 7. Composite figure ---------------------------------------------------
+# 7. Composite figure 
 # Final journal layout:
 #   A/B on the first row
 #   C = four volcano plots in one row
 #   D = compact treatment-response Venn centered beneath
-#
-# IMPORTANT: panelD is already a wrapped Venn grob. Do NOT wrap it again;
-# double-wrapping is what caused the blank grey box in the previous composite.
 
 panelA_tag <- panelA +
   labs(tag = "A") +
@@ -777,8 +737,6 @@ c_label <- ggplot() +
 panelC_row <- c_label | panelC_tag
 panelC_row <- panelC_row + plot_layout(widths = c(0.055, 0.945))
 
-# panelD is used DIRECTLY here. A separate narrow text column supplies the D tag,
-# avoiding any second wrap_elements() call around the Venn grob.
 d_label <- ggplot() +
   annotate("text", x = 0, y = 1, label = "D", fontface = "bold", size = 5.3,
            hjust = 0, vjust = 1) +
