@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild the main figure from the already-saved Pfaffl-corrected CSVs.
 
-Faster than rerunning apply_pfaffl.py because it doesn't need to re-do the
-Cq loading / QC / DeltaCq / aggregation steps. Use this whenever the
-analysis math hasn't changed but figure styling has (labels, colors, etc.).
-"""
 import sys
 import pandas as pd
 from pathlib import Path
