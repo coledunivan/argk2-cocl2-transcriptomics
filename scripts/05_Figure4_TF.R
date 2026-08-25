@@ -1,4 +1,3 @@
-# =============================================================================
 # Fig4_combined.R — recreate Figure 4 end-to-end in R
 #
 # Builds a single 3-panel figure from raw counts:
@@ -15,7 +14,6 @@
 #   <contrast>_by_proportion.csv                   — TF stats per contrast
 #   <contrast>_by_count.csv
 #   <contrast>_by_index.csv
-# =============================================================================
 
 suppressPackageStartupMessages({
   library(DESeq2)
@@ -38,7 +36,7 @@ group_by <- dplyr::group_by
 distinct <- dplyr::distinct
 rename <- dplyr::rename
 
-# ---- Inputs (auto-detect) ---------------------------------------------------
+# Inputs (auto-detect) 
 find_first <- function(patterns, label) {
   hits <- character(0)
   for (p in patterns) hits <- c(hits, Sys.glob(p))
@@ -57,7 +55,7 @@ min_sum  <- 10
 out_dir  <- "outputs/figures/Figure4"
 if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
 
-# ---- Load -------------------------------------------------------------------
+# Load 
 rna_raw <- read.csv(rna_file,  check.names = FALSE, stringsAsFactors = FALSE)
 meta_df <- read.csv(meta_file, stringsAsFactors = FALSE)
 
@@ -93,7 +91,7 @@ gene_to_target <- rna_raw %>%
   filter(!is.na(Gene), !is.na(UniprotID.Target)) %>%
   distinct()
 
-# ---- DESeq2 -----------------------------------------------------------------
+# DESeq2 
 message("Running DESeq2…")
 dds <- DESeqDataSetFromMatrix(
   countData = counts,
@@ -110,7 +108,7 @@ dds_simple$treatment <- relevel(dds_simple$treatment, ref = "untreated")
 design(dds_simple) <- ~ genotype + treatment + genotype:treatment
 dds_simple <- DESeq(dds_simple)
 
-# ---- Contrast helpers -------------------------------------------------------
+# Contrast helpers
 get_genotype_within_treatment <- function(dds_obj, genotype_alt = "RB2060", trt = "untreated") {
   rn <- resultsNames(dds_obj)
   main_coef <- rn[grepl("^genotype", rn) & grepl(genotype_alt, rn) & !grepl("treatment", rn)]
@@ -145,7 +143,7 @@ contrast_fns <- list(
   RB2060_TR_vs_N2UN   = function() get_combined_RB_TR_vs_N2_UN(dds_simple, "RB2060")
 )
 
-# ---- Per-contrast TF summaries ---------------------------------------------
+# Per-contrast TF summaries 
 summarize_TFs <- function(res_obj, label) {
   res_df <- as.data.frame(res_obj) %>%
     rownames_to_column("Gene") %>%
@@ -177,9 +175,7 @@ summarize_TFs <- function(res_obj, label) {
 message("Summarising TFs per contrast…")
 summaries <- imap(contrast_fns, ~ summarize_TFs(.x(), .y))
 
-# =============================================================================
 # Panel A — grouped bar: %DE in reference vs argk-2 KO (TR vs UN)
-# =============================================================================
 fig_tfs <- c("blmp-1","cebp-1","ceh-60","daf-16","elt-2","fos-1","lin-35",
              "nhr-28","nhr-77","pha-4","pqm-1","sma-9","snpc-4","zip-2")
 
@@ -215,9 +211,7 @@ panel_A <- ggplot(panelA_data, aes(x = Name.TF, y = prop_deg, fill = grp)) +
     panel.grid.major.y = element_line(color = "gray90", linetype = "dotted", linewidth = 0.3)
   )
 
-# =============================================================================
 # Panel B — slope: Genotype → Treatment → Genotype + Treatment
-# =============================================================================
 slope_tfs <- c("zip-2","cebp-1","ceh-60","elt-2","pqm-1","nhr-28",
                "fos-1","daf-16","nhr-77","pha-4","blmp-1")
 
@@ -278,12 +272,10 @@ panel_B <- ggplot(panelB_data, aes(x = stage_x, y = prop_deg,
     panel.grid.major.y = element_line(color = "gray90", linetype = "dotted", linewidth = 0.3)
   )
 
-# =============================================================================
 # Panel C — 2x2 bubble grid: top-10 TFs per contrast by INDEX
 # Shared size & color scales across all four contrasts so visual magnitudes
 # can be compared directly. Limits are computed from the pooled top-10 of
 # each contrast (i.e. the points actually plotted).
-# =============================================================================
 panel_c_contrasts <- list(
   summaries$RB2060_UN_vs_N2,
   summaries$N2_TR_vs_UN,
@@ -356,9 +348,7 @@ panel_C <- wrap_plots(c_topleft, c_topright, c_botleft, c_botright, ncol = 2) +
         legend.box = "vertical",
         legend.spacing.y = unit(0.1, "cm"))
 
-# =============================================================================
 # Combine A + B + C
-# =============================================================================
 left_col <- panel_A / panel_B
 final <- left_col | panel_C
 final <- final + plot_layout(widths = c(1.05, 1.0))
