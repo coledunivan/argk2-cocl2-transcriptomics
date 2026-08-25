@@ -1,12 +1,10 @@
 #!/usr/bin/env Rscript
-# =============================================================================
 # 03_Figure2_KEGG.R
-# =============================================================================
 #
 # PURPOSE
 #   Render Figure 2 -- KEGG functional composition of the CoCl2 stress response.
 #   Panels A/B summarize three biologically interpretable main contrasts; Panel C
-#   independently summarizes the genotype x treatment interaction term.
+#   summarizes the genotype x treatment interaction term.
 #
 # INPUTS (all produced by 01_DESeq2_and_TF_enrichment.R, in outputs/DESeq2/)
 #   DESeq2_treatment_in_N2.csv         -- N2: treated vs untreated
@@ -26,7 +24,6 @@
 #   outputs/figures/Figure2/Figure2_KEGG_journal_ready.png   -- raster preview
 #   outputs/DESeq2/KEGG_Functional_Composition_All_Contrasts.csv
 #                                                        -- long-format DEG x pathway
-# =============================================================================
 
 suppressPackageStartupMessages({
   library(dplyr); library(tidyr); library(readr); library(tibble)
@@ -42,13 +39,13 @@ DESEQ_DIR <- "outputs/DESeq2"
 FIG_DIR   <- "outputs/figures/Figure2"
 if (!dir.exists(FIG_DIR)) dir.create(FIG_DIR, recursive = TRUE)
 
-# ---- Canonical DEG threshold used throughout Figure 2 ----
+# DEG threshold used throughout Figure 2
 PADJ_CUTOFF <- 0.05
 LFC_CUTOFF  <- 1
 message(sprintf("Figure 2 DEG filter: padj < %.2f AND |log2FC| > %.1f",
                 PADJ_CUTOFF, LFC_CUTOFF))
 
-# ---- 1. Load contrast tables and label them with friendly contrast names ----
+#  1. Load contrast tables and label them with friendly contrast names 
 read_contrast <- function(filename, contrast_label) {
   path <- file.path(DESEQ_DIR, filename)
   if (!file.exists(path)) {
@@ -73,7 +70,7 @@ message(sprintf("Loaded contrasts (rows): N2=%d, argk-2=%d, geno_unt=%d, int=%d"
                 nrow(deg_n2_trt), nrow(deg_rb2060_trt),
                 nrow(deg_geno_unt), nrow(deg_interaction)))
 
-# ---- 2. Build KEGG gene -> pathway map ----
+# 2. Build KEGG gene -> pathway map 
 kegg_paths <- load_kegg_offline()
 pathway_names <- as_tibble(kegg_paths$KEGGPATHID2NAME) |>
   setNames(c("pathway_id", "pathway_name"))
@@ -84,7 +81,7 @@ gene2path <- as_tibble(kegg_paths$KEGGPATHID2EXTID) |>
 message(sprintf("KEGG: %d unique pathways, %d gene-pathway edges",
                 nrow(pathway_names), nrow(gene2path)))
 
-# ---- 3. Compose DEG x KEGG cross-table ----
+# 3. Compose DEG x KEGG cross-table 
 # KEGG figure threshold: padj < 0.05 and |log2FC| > 1
 make_deg_kegg <- function(df) {
   df |>
@@ -115,9 +112,9 @@ message("Wrote: ", file.path(DESEQ_DIR, "KEGG_Functional_Composition_All_Contras
 # Reusable shortcut for Panel A code below
 deg_kegg <- deg_kegg_3
 
-# =============================================================================
-# ---- 4. Panel A: KEGG violin -- THESIS-STYLE HORIZONTAL LAYOUT -------------
-# =============================================================================
+# 
+# 4. Panel A: KEGG violin -- THESIS-STYLE HORIZONTAL LAYOUT 
+# 
 
 message("Building Panel A in thesis-style layout...")
 
@@ -176,11 +173,11 @@ plot_A_data$contrast <- factor(
 )
 
 
-# ---------------------------------------------------------------------------
+# 
 # IMPORTANT CHANGE:
 # facet_grid(. ~ contrast) puts the three effects SIDE-BY-SIDE,
 # reproducing the structure of the original thesis figure.
-# ---------------------------------------------------------------------------
+# 
 
 panel_A <- ggplot(
   plot_A_data,
@@ -279,7 +276,7 @@ panel_A <- ggplot(
 
 
 
-# ---- 5. Panel B: DEG coverage heatmap (three main contrasts only) -----------
+# 5. Panel B: DEG coverage heatmap (three main contrasts only)
 
 message("Building Panel B...")
 
@@ -361,7 +358,7 @@ panel_B <- ggplot(
   )
 
 
-# ---- 6. Panel C: Interaction-term DEGs 
+# 6. Panel C: Interaction-term DEGs 
 
 
 message("Building Panel C...")
@@ -519,7 +516,7 @@ panel_C <- ggplot(
   )
 
 
-# ---- 7. Assemble Layout
+# 7. Assemble Layout
 
 bottom_row <- panel_B | panel_C
 
@@ -596,9 +593,6 @@ write_csv(
   file.path(FIG_DIR, "Figure2_panelC_interaction_gene_pathway_map.csv")
 )
 
-message("✔ Saved: ", out_pdf)
-message("✔ Saved: ", out_png)
-message("✔ Saved: ", out_tiff)
 
 message(
   "\n✔ Figure 2 complete"
