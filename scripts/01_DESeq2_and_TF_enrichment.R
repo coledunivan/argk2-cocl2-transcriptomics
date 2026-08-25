@@ -28,7 +28,7 @@ library(dplyr)
 DESEQ_OUT <- "outputs/DESeq2"
 if (!dir.exists(DESEQ_OUT)) dir.create(DESEQ_OUT, recursive = TRUE)
 
-# ---- 1. Load data ------------------------------------------------------------
+# 1. Load data 
 #
 # The counts and the TFLink edges are merged into a single file:
 # `data/reference/RNAseq_to_TF_Targets.csv`. It has one row per TF->target edge, and
@@ -109,7 +109,7 @@ meta <- read.csv("data/Sample_Metadata_Table.csv", stringsAsFactors = FALSE)
 colnames(meta) <- trimws(colnames(meta))
 meta$SampleLabel <- trimws(meta$SampleLabel)
 
-# ---- 2. Prepare count matrix
+# 2. Prepare count matrix
 
 # Subset metadata to N2 and RB2060 only, then drop unused factor levels
 # so ghost levels (MAH205, RB2598) don't interfere with the design matrix
@@ -142,7 +142,7 @@ cat("\nDesign:\n")
 print(with(meta_sub, table(genotype, treatment, experiment)))
 cat("Total samples:", nrow(meta_sub), "\n")
 
-# ---- 3. DESeq2
+# 3. DESeq2
 
 # Option A: Full model with experiment interactions
 cat("\n--- Trying full model: ~ genotype * treatment + genotype:experiment + treatment:experiment ---\n")
@@ -172,7 +172,7 @@ tryCatch({
 cat("Model used:", model_used, "\n")
 cat("Result names:", paste(resultsNames(dds), collapse = ", "), "\n\n")
 
-# ---- 4. Extract contrasts (with apeglm/ashr LFC shrinkage
+# 4. Extract contrasts (with apeglm/ashr LFC shrinkage
 #
 # Shrinkage is essential here: the design is small (16 samples) and we have
 # many low-count genes, so unshrunk LFCs explode for genes with high variance.
@@ -267,7 +267,7 @@ for (nm in c("res_treat_N2","res_treat_RB","res_geno_unt","res_geno_trt","res_in
               nm, median(vals), quantile(vals, 0.9), max(vals)))
 }
 
-# ---- 5. Save contrast results ------------------------------------------------
+# 5. Save contrast results 
 
 write.csv(res_treat_N2, file.path(DESEQ_OUT, "DESeq2_treatment_in_N2.csv"),     row.names = TRUE)
 write.csv(res_treat_RB, file.path(DESEQ_OUT, "DESeq2_treatment_in_RB2060.csv"), row.names = TRUE)
@@ -275,7 +275,7 @@ write.csv(res_geno_unt, file.path(DESEQ_OUT, "DESeq2_genotype_untreated.csv"),  
 write.csv(res_geno_trt, file.path(DESEQ_OUT, "DESeq2_genotype_treated.csv"),    row.names = TRUE)
 write.csv(res_interaction, file.path(DESEQ_OUT, "DESeq2_GxE_interaction.csv"),     row.names = TRUE)
 
-# ---- 6. Effect classification ------------------------------------------------
+# 6. Effect classification 
 
 cat("Classifying genes...\n")
 
@@ -356,7 +356,7 @@ write.csv(tf_targets_de, file.path(DESEQ_OUT, "DESeq2_TF_targets_DE.csv"), row.n
 cat("  DE TF targets:", nrow(tf_targets_de), "\n")
 print(table(tf_targets_de$effect_class))
 
-# ---- 8. TF-level summary for GRN node labels
+# 8. TF-level summary for GRN node labels
 
 cat("\nTF summary (DE targets and GxE proportions):\n")
 de_genes  <- classify$gene_symbol[classify$effect_class != "NS"]
@@ -377,7 +377,7 @@ tf_stats <- tf_edges %>%
 print(as.data.frame(tf_stats))
 write.csv(tf_stats, file.path(DESEQ_OUT, "DESeq2_TF_summary.csv"), row.names = FALSE)
 
-# ---- 8b. Fisher exact test: G x E enrichment per TF -------------------------
+# 8b. Fisher exact test: G x E enrichment per TF 
 #
 # 2x2 contingency table for each TF, comparing its target set against the
 # rest of the testable genome:
@@ -438,7 +438,7 @@ tf_stats <- merge(tf_stats, fisher_df[, c("TF_name","odds_ratio","p_value","padj
 tf_stats <- tf_stats[order(-tf_stats$DE_targets), ]
 write.csv(tf_stats, file.path(DESEQ_OUT, "DESeq2_TF_summary.csv"), row.names = FALSE)
 
-# ---- 8c. STRING PPI query for the GRN TFs
+# 8c. STRING PPI query for the GRN TFs
 #
 # Pulls high-confidence (combined score >= 700) protein-protein interactions
 # among the 12 TFs in the figure, from the STRING REST API for C. elegans
@@ -494,7 +494,7 @@ if (!is.null(ppi_df) && nrow(ppi_df) > 0) {
   cat("  No PPI edges returned. No CSV written.\n")
 }
 
-# ---- 9. Summary
+# 9. Summary
 
 cat("\n========== SUMMARY ==========\n")
 cat("Model:", model_used, "\n")
