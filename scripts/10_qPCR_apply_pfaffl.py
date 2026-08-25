@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-apply_pfaffl.py - rebuild the combined analysis with efficiency-corrected (Pfaffl) log2FCs.
 
 Strategy
---------
+
 Primer efficiency correction modifies the per-well normalized expression:
 
   eff_dcq = Cq_target * log2(E_target) - mean(Cq_ref) * log2(E_ref)
@@ -12,20 +11,12 @@ which gives log2FC = -(mean(eff_dcq)_num - mean(eff_dcq)_den)
                   = -log2(E_target) * DeltaCq_target + log2(E_ref) * DeltaCq_ref
                   = Pfaffl (2001, NAR 29:e45).
 
-For the NEW run (ColeD_41726) we have raw Cq so we compute this EXACTLY
-by passing the efficiency table to compute_delta_cq().
 
-For the OLD 7 plates the raw Cq data is not in the upload. We only have
-log2fc_classic per (run, target, contrast). The exact Pfaffl correction
-requires ΔCq_target and ΔCq_ref separately; we have only their signed
-difference (ddcq = ΔCq_target - ΔCq_ref). So we use the algebraic identity
 
   log2fc_pfaffl = log2(E_target) * log2fc_classic
                 + (log2(E_ref) - log2(E_target)) * ΔCq_ref
 
-If the reference is stable (ΔCq_ref ≈ 0) this simplifies to multiplication
-by log2(E_target). We VERIFY this approximation against exact Pfaffl on
-the new run, where we can compute both.
+
 """
 import sys
 import numpy as np
@@ -48,27 +39,21 @@ COMBINED_CSV        = QPCR_OUT / "qPCR_combined_deltadeltaCq.csv"
 COMPARISON_CSV      = QPCR_OUT / "qPCR_vs_RNAseq_comparison.csv"
 EFF_CSV             = QPCR_OUT / "primer_efficiencies.csv"
 
-# --------------------------------------------------------------------------
+# 
 # 0. Load primer efficiencies
-# --------------------------------------------------------------------------
+# 
 eff_df = pd.read_csv(EFF_CSV)
 EFFICIENCIES = dict(zip(eff_df["target"], eff_df["E_fold"]))
 # Fill in a default of 2.0 (100% efficient) for targets with no curve data.
-# Among figure targets, all five have curves. For non-figure targets that
-# appear in the old per-run table (ceh-74, zip-2, fbxa-79, cest-34, etc.)
-# we fall back to 2.0 -> no correction. This is acceptable because those
-# targets are not in the main figure subset and any Pfaffl-corrected values
-# for them would still only go into the aggregate CSV, not the figure.
-print("Using primer efficiencies:")
+# Among figure targets, all five have curves. 
+
 for k, v in EFFICIENCIES.items():
     print(f"  {k:10s}  E={v:.3f} fold  ({(v-1)*100:.1f}%)  log2(E)={np.log2(v):.3f}")
 
 REF_LOG2E = np.log2(EFFICIENCIES[REF_GENE])
 print(f"\nRef log2(E) = {REF_LOG2E:.3f}  (classic assumes 1.000)")
 
-# --------------------------------------------------------------------------
 # 1. Reprocess NEW run with exact Pfaffl correction
-# --------------------------------------------------------------------------
 print("\n" + "=" * 72)
 print("STEP 1: exact Pfaffl on new run (raw Cq available)")
 print("=" * 72)
@@ -102,17 +87,10 @@ merged["delta"] = merged["log2fc_pfaffl"] - merged["log2fc_classic"]
 print(merged[["target","contrast","log2fc_classic","log2fc_pfaffl","delta"]]
       .round(3).to_string(index=False))
 
-# --------------------------------------------------------------------------
-# 2. Load OLD per-run table and apply scaling approximation
-# --------------------------------------------------------------------------
 print("\n" + "=" * 72)
 print("STEP 2: scaling approximation on old runs (no raw Cq available)")
 print("=" * 72)
 
-# Read the *uncorrected* per-plate values from a file this script never writes.
-# PER_RUN_CLASSIC_CSV is an OUTPUT of this script; reading it as input made the
-# script non-idempotent — a second run scaled every old-plate log2FC by
-# log2(E_target) again, silently shrinking all published values.
 if not PER_RUN_SOURCE_CSV.exists():
     sys.exit(
         f"[abort] {PER_RUN_SOURCE_CSV} not found.\n"
@@ -121,9 +99,6 @@ if not PER_RUN_SOURCE_CSV.exists():
     )
 old_per_run = pd.read_csv(PER_RUN_SOURCE_CSV)
 
-
-# Drop any new-run rows that might already be in there (they'll be replaced
-# with Pfaffl-exact values computed above)
 old_per_run = old_per_run[old_per_run["run"] != NEW_RUN].copy()
 print(f"  Old per-run rows: {len(old_per_run)}  (runs: {old_per_run['run'].nunique()})")
 
@@ -140,9 +115,6 @@ old_per_run["log2fc"] = [
 ]
 old_per_run["ddcq"] = -old_per_run["log2fc"]
 
-# --------------------------------------------------------------------------
-# 2b. Validate the scaling approximation against exact Pfaffl on the NEW run
-# --------------------------------------------------------------------------
 print("\n  Validating scaling approximation vs exact Pfaffl on NEW run:")
 val_rows = []
 for _, r in classic_new.iterrows():
@@ -165,9 +137,6 @@ print(f"\n  approximation error: mean |err| = "
       f"{val_df['approx_error'].abs().mean():.3f}, "
       f"max |err| = {val_df['approx_error'].abs().max():.3f} log2FC units")
 
-# --------------------------------------------------------------------------
-# 3. Combine old (approx) + new (exact) into a Pfaffl-corrected per-run table
-# --------------------------------------------------------------------------
 print("\n" + "=" * 72)
 print("STEP 3: merging old (approx Pfaffl) + new (exact Pfaffl)")
 print("=" * 72)
@@ -180,9 +149,7 @@ combined = pd.concat([old_out, pfaffl_new], ignore_index=True)
 print(f"  combined per-run rows: {len(combined)}  "
       f"({combined['run'].nunique()} plates)")
 
-# --------------------------------------------------------------------------
 # 4. Re-aggregate and write CSVs
-# --------------------------------------------------------------------------
 agg = aggregate_across_runs(combined)
 agg["padj_BH"] = bh_adjust(agg["p_value"].values)
 agg = agg.sort_values(["contrast","target"]).reset_index(drop=True)
@@ -199,9 +166,7 @@ combined.to_csv(PER_RUN_CLASSIC_CSV, index=False)
 agg.to_csv(COMBINED_CSV, index=False)
 print(f"  overwrote {PER_RUN_CLASSIC_CSV} and {COMBINED_CSV} with Pfaffl-corrected values")
 
-# --------------------------------------------------------------------------
 # 5. Refresh qPCR_vs_RNAseq_comparison.csv with Pfaffl-corrected qPCR columns
-# --------------------------------------------------------------------------
 comp = pd.read_csv(COMPARISON_CSV)
 # Collapse old duplicate rows (the t22f3.3 -> t22f3.11 rename had left
 # a stale duplicate in the prior table)
@@ -225,9 +190,7 @@ comp["direction_agrees"] = np.where(both, sign_q == sign_r, pd.NA)
 comp.to_csv(COMPARISON_CSV, index=False)
 print(f"  refreshed {COMPARISON_CSV} ({len(comp)} rows)")
 
-# --------------------------------------------------------------------------
 # 6. Figure-subset summary
-# --------------------------------------------------------------------------
 print("\n" + "=" * 72)
 print("FIGURE SUBSET (>= 2 runs per G x E, Pfaffl-corrected)")
 print("=" * 72)
@@ -247,17 +210,13 @@ disp["p_value"] = disp["p_value"].apply(lambda x: f"{x:.2g}" if np.isfinite(x) e
 disp["padj_BH"] = disp["padj_BH"].apply(lambda x: f"{x:.2g}" if np.isfinite(x) else "")
 print(disp.to_string(index=False))
 
-# --------------------------------------------------------------------------
-# 7. Rebuild main figure
-# --------------------------------------------------------------------------
+# 7. Build main figure
 print("\n" + "=" * 72)
 print("REBUILDING MAIN FIGURE (Pfaffl-corrected)")
 print("=" * 72)
 make_figure(agg_fig, ddcq_fig, "qPCR_figure_panel.pdf", "qPCR_figure_panel.png")
 
-# --------------------------------------------------------------------------
 # 8. Spearman rho for panel C
-# --------------------------------------------------------------------------
 from scipy import stats as _stats
 cmp_fig = comp[comp["gene"].isin(genes_with_key) &
                ~comp["gene"].isin(GENES_EXCLUDE) &
