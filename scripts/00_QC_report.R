@@ -73,7 +73,7 @@ if (is.na(id_col_qc)) id_col_qc <- colnames(coldata_full)[1]
 rownames(coldata_full) <- trimws(coldata_full[[id_col_qc]])
 coldata <- coldata_full
 
-# ---- 4) ALIGN COUNTS & METADATA ----
+# 4) ALIGN COUNTS & METADATA 
 # Harmonize naming if counts use the GEO library names
 counts <- harmonize_sample_names(counts, coldata,
                                  target_col = id_col_qc,
@@ -89,13 +89,13 @@ if (length(shared_samples) == 0) {
 counts  <- counts[, shared_samples]
 coldata <- coldata[shared_samples, ]
 
-# Confirm perfect alignment
+# Confirm alignment
 stopifnot(all(colnames(counts) == rownames(coldata)))
 
 message("Aligned samples: ", length(shared_samples), " (", paste(shared_samples, collapse = ", "), ")")
 
-# ---- 5) CREATE DESEq2 OBJECT ----
-# Uses your preferred design:
+# 5) Create Deseq2 Obj
+# Uses the design:
 #   ~ genotype * treatment + genotype:experiment + treatment:experiment
 message("Creating DESeqDataSet with design = ~ genotype * treatment + genotype:experiment + treatment:experiment")
 
@@ -105,17 +105,17 @@ dds <- DESeqDataSetFromMatrix(
   design    = ~ genotype * treatment + genotype:experiment + treatment:experiment
 )
 
-# Optional: filter low-count genes
+# filter low-count genes
 keep <- rowSums(counts(dds)) >= 10
 dds  <- dds[keep, ]
 message("Filtered to ", nrow(dds), " genes with rowSum >= 10.")
 
-# ---- 6) RUN DESeq ----
+# 6) RUN DESeq 
 message("Running DESeq model...")
 dds <- DESeq(dds)
 message("DESeq finished.")
 
-# ---- 7) VARIANCE STABILIZING TRANSFORM (for PCA & heatmap) ----
+# 7) VARIANCE STABILIZING TRANSFORM (for PCA & heatmap) 
 message("Computing variance-stabilizing transform (VST)...")
 vsd <- vst(dds, blind = TRUE)
 
@@ -180,7 +180,7 @@ plotDispEsts(dds, main = "Dispersion estimates")
 dev.off()
 message("Saved dispersion plot to: outputs/QC/Dispersion_estimates.pdf")
 
-# ---- 11) MAPPING RATE TABLE ----
+#  11) MAPPING RATE TABLE 
 # Requires a tab-delimited file "mapping_stats.txt" with:
 #   sample_id  total_reads  mapped_reads
 # Example:
@@ -188,7 +188,7 @@ message("Saved dispersion plot to: outputs/QC/Dispersion_estimates.pdf")
 #   A2 23000000 22000000
 # etc.
 # This block will silently skip if the file isn't present.
-# -----------------------------------------------
+#
 if (file.exists(mapping_file)) {
   message("Loading mapping stats from: ", mapping_file)
   
