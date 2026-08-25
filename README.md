@@ -1,7 +1,6 @@
 # ARGK-2 sets a transcriptional stress response baseline in *Caenorhabditis elegans*
 
-Analysis code and processed data for Dunivan & Fausett, submitted to *G3: Genes|Genomes|Genetics*.
-
+Analysis code and processed data for Dunivan & Fausett,
 Full-factorial bulk RNA-seq of *C. elegans* N2 (wild type), *argk-2(ok2723)* (RB2060) and
 *argk-4(ok3602)* (RB2598) under acute CoCl₂ oxidative stress, with orthogonal qPCR validation.
 Every figure in the manuscript is reproducible from this repository.
@@ -31,7 +30,7 @@ Rscript scripts/02_Figure1.R
 # ... etc, see the table below
 ```
 
-**All scripts must be launched from the repository root.** Each script resolves its own
+#All scripts must be launched from the repository root. Each script resolves its own
 project root, so `Rscript scripts/02_Figure1.R` and `cd scripts && Rscript 02_Figure1.R`
 both work, but relative paths are always interpreted against the repo root.
 
