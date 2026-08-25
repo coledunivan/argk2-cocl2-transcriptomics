@@ -41,11 +41,9 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 from scipy import stats
 
-# ============================================================================
 # CONFIGURATION
-# ============================================================================
 
-# ---- Repository-anchored paths ---------------------------------------------
+#  Repository-anchored paths 
 # Resolve every input/output from the repo root so the script can be launched
 # from anywhere. Expected layout: <repo>/scripts/qpcr/qpcr_analysis.py
 ROOT      = Path(__file__).resolve().parents[2]
@@ -113,9 +111,7 @@ def parse_sample(sample):
         return None, None
     return canonical, treatment
 
-# ============================================================================
 # STEP 1: LOAD ALL Cq FILES
-# ============================================================================
 
 def load_all_cq(root):
     """Return long-format DataFrame of every Cq well across every run.
@@ -181,9 +177,7 @@ def load_all_cq(root):
             })
     return pd.DataFrame(rows)
 
-# ============================================================================
 # STEP 2: QC - FLAG OUTLIER WELLS WITHIN TECHNICAL REPLICATES
-# ============================================================================
 
 def deduplicate_runs(df):
     """Some folders in the qPCR dataset are email forwards of the same plate
@@ -255,9 +249,7 @@ def flag_outliers(df, sd_threshold=0.5, max_drop=2):
             dropped += 1
     return df
 
-# ============================================================================
 # STEP 3: COMPUTE DELTA CQ (TARGET - REF) WITHIN EACH RUN/CONDITION
-# ============================================================================
 
 def compute_delta_cq(df, ref_gene=REF_GENE, efficiencies=None):
     """For each (run, strain, treatment) group:
@@ -307,9 +299,7 @@ def compute_delta_cq(df, ref_gene=REF_GENE, efficiencies=None):
             })
     return pd.DataFrame(out)
 
-# ============================================================================
 # STEP 4: COMPUTE DELTA DELTA CQ FOR EACH OF THE 3 CONTRASTS
-# ============================================================================
 
 CONTRASTS = [
     {
@@ -374,9 +364,7 @@ def compute_ddcq_contrasts(dcq_df):
             })
     return pd.DataFrame(out)
 
-# ============================================================================
 # STEP 5: AGGREGATE ACROSS RUNS (per-gene per-contrast mean and CI)
-# ============================================================================
 
 def aggregate_across_runs(ddcq_df):
     """Per (target, contrast), compute:
@@ -443,9 +431,7 @@ def star(p):
     if p < 0.05:  return "*"
     return ""
 
-# ============================================================================
 # STEP 6: BUILD THE FIGURE
-# ============================================================================
 
 CONTRAST_COLORS = {
     "treat_N2": "#4A90C2",  # blue   - treatment effect in WT
@@ -978,9 +964,7 @@ def make_figure(agg_df, ddcq_df, out_pdf, out_png, subtitle=None):
     print(f"[done] saved {out_pdf}")
     print(f"[done] saved {out_png}")
 
-# ============================================================================
 # MAIN
-# ============================================================================
 
 def main():
     # ── Fast-path: load from pre-computed CSVs if they exist ──────────────────
